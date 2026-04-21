@@ -662,7 +662,14 @@ Authorization: YOUR_FONNTE_TOKEN
                     </thead>
                     <tbody>
                       {(activeTab==="m5"?listM5:listFelt).map((g,i)=>{
-                        const nearCabang = g.lat ? CABANG.map(c=>(({...c,jarak:haversine(g.lat,g.lng,c.lat,c.lng)})))).sort((a,b)=>a.jarak-b.jarak)[0] : null;
+                        const nearCabang = g.lat
+                          ? CABANG
+                              .map(c => ({
+                                ...c,
+                                jarak: haversine(g.lat, g.lng, c.lat, c.lng)
+                              }))
+                              .sort((a, b) => a.jarak - b.jarak)[0]
+                          : null;
                         const isAlert = nearCabang && nearCabang.jarak <= radius;
                         return (
                           <tr key={i} className="hover-row" onClick={()=>setSelectedGempa(g)}
